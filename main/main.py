@@ -7,20 +7,11 @@ import mediapipe as mp
 from mediapipe.tasks import python
 from mediapipe.tasks.python import vision
 
-from lernet.network import Network
+import lernet.network
 import numpy as np
 
-
-# Initialize gesture model
-model = Network(
-    layerSizes=[42,256,256,128,64,19],
-    activations=["relu","relu","relu","relu","softmax"],
-    lossName="crossentropy",
-    optimizer="adam"
-)
-
-model.ModelSummary()
-model.Load("models/biggermodel(98).npz")
+# Load model
+model = lernet.network.FromFile("biggermodel(98).npz")
 
 gesture_labels = ['call', 'dislike', 'fist', 'four', 'like', 'one', 'no_gesture', 'ok', 'one', 'palm', 'two', 'peace_inverted', 'rock', 'stop', 'stop_inverted', 'three', 'three2', 'two_up', 'two_up_inverted']
 gesture_dict = {i: label for i, label in enumerate(gesture_labels)}
@@ -30,7 +21,7 @@ resolution = (2560, 1440)
 
 root_dir = os.path.abspath(os.path.dirname(__file__))
 base_options = python.BaseOptions(
-	model_asset_path=os.path.join(root_dir, "main/hand_landmarker.task")
+	model_asset_path=os.path.join(root_dir, "hand_landmarker.task")
 )
 
 options = vision.HandLandmarkerOptions(
