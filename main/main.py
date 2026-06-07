@@ -13,8 +13,8 @@ import numpy as np
 
 # Initialize gesture model
 model = Network(
-    layerSizes=[42,128,64,19],
-    activations=["relu","relu","softmax"],
+    layerSizes=[42,256,256,128,64,19],
+    activations=["relu","relu","relu","relu","softmax"],
     lossName="crossentropy",
     optimizer="adam"
 )
